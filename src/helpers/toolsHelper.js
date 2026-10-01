@@ -1,51 +1,52 @@
-import Swal from "sweetalert2";
+// SweetAlert2 dimuat saat dialog pertama kali dibutuhkan (lazy load),
+// supaya tidak memperbesar JavaScript awal halaman.
+let swalPromise = null;
+
+function loadSwal() {
+  if (!swalPromise) {
+    swalPromise = import("sweetalert2").then((module) => module.default);
+  }
+  return swalPromise;
+}
+
+async function showInfoDialog(options) {
+  const Swal = await loadSwal();
+  const result = await Swal.fire({ confirmButtonText: "Tutup", ...options });
+  if (result.isConfirmed) {
+    Swal.close();
+  }
+  return result;
+}
 
 export function showErrorDialog(message) {
-  return Swal.fire({
+  return showInfoDialog({
     title: "Terjadi Kesalahan",
     text: message,
     icon: "error",
-    confirmButtonText: "Tutup",
     confirmButtonColor: "#ef4444",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.close();
-    }
-    return result;
   });
 }
 
 export function showWarningDialog(message) {
-  return Swal.fire({
+  return showInfoDialog({
     title: "Peringatan",
     text: message,
     icon: "warning",
-    confirmButtonText: "Tutup",
     confirmButtonColor: "#f59e0b",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.close();
-    }
-    return result;
   });
 }
 
 export function showSuccessDialog(message) {
-  return Swal.fire({
+  return showInfoDialog({
     title: "Tindakan Berhasil",
     text: message,
     icon: "success",
-    confirmButtonText: "Tutup",
     confirmButtonColor: "#10b981",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.close();
-    }
-    return result;
   });
 }
 
-export function showConfirmDialog(message) {
+export async function showConfirmDialog(message) {
+  const Swal = await loadSwal();
   return Swal.fire({
     title: "Konfirmasi",
     text: message,
@@ -53,8 +54,8 @@ export function showConfirmDialog(message) {
     showCancelButton: true,
     confirmButtonText: "Ya",
     cancelButtonText: "Tidak",
-    confirmButtonColor: "#1c6a6b",
-    cancelButtonColor: "#94a3b8",
+    confirmButtonColor: "#0f766e",
+    cancelButtonColor: "#64748b",
   });
 }
 

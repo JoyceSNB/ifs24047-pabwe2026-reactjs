@@ -107,7 +107,7 @@ function UsersPage() {
                   )}
 
                   <div className="min-w-0 flex-1">
-                    <h3 className="font-bold text-slate-900 truncate">{u.name}</h3>
+                    <h2 className="font-bold text-slate-900 truncate">{u.name}</h2>
                     <p className="text-xs text-slate-600 flex items-center gap-1 mt-0.5 truncate">
                       <IconMail size={14} className="shrink-0 text-slate-600" />
                       <span className="truncate">{u.email}</span>
