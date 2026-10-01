@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/*
+ * Warna memakai palet bawaan Tailwind:
+ * teal  : warna utama (navigasi, tombol)
+ * amber : label barang ditemukan
+ * rose  : laporan kehilangan
+ * Font: Plus Jakarta Sans (teks) + Bricolage Grotesque (judul), dimuat di index.html
+ */
+@layer base {
+  body {
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: "Bricolage Grotesque", "Plus Jakarta Sans", system-ui, sans-serif;
+  }
+
+  button,
+  a,
+  [role="button"],
+  select,
+  label[for],
+  label[data-testid],
+  summary {
+    cursor: pointer;
+  }
+
+  :focus-visible {
+    outline: 2px solid #0d9488;
+    outline-offset: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
