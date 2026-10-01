@@ -9,11 +9,18 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), tailwindcss()],
+    // host & allowedHosts: agar bisa diakses lewat domain hasil deploy,
+    // bukan hanya dari localhost. Vite otomatis mengarahkan path seperti
+    // /auth/login ke index.html (SPA fallback) di mode dev & preview.
     server: {
       port: Number(env.APP_PORT) || 3000,
+      host: true,
+      allowedHosts: true,
     },
     preview: {
       port: Number(env.APP_PORT) || 3000,
+      host: true,
+      allowedHosts: true,
     },
     define: {
       DELCOM_BASEURL: JSON.stringify(
