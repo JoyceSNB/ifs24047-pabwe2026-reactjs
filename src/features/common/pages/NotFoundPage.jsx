@@ -5,7 +5,7 @@ function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-stone-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <main className="min-h-screen bg-stone-100 flex items-center justify-center p-4 sm:p-6 lg:p-8">
       <div className="max-w-md w-full text-center">
         {/* Decorative Badge */}
         <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-teal-50 text-teal-700 mb-6 shadow-sm ring-8 ring-teal-50/50">
@@ -45,7 +45,7 @@ function NotFoundPage() {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

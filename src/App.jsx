@@ -4,6 +4,7 @@ import AuthLayout from "./features/auth/layouts/AuthLayout";
 import LoginPage from "./features/auth/pages/LoginPage";
 import RegisterPage from "./features/auth/pages/RegisterPage";
 import NotFoundPage from "./features/common/pages/NotFoundPage";
+import ErrorBoundary from "./features/common/components/ErrorBoundary";
 import LostFoundLayout from "./features/lost-founds/layouts/LostFoundLayout";
 
 // Halaman dashboard dimuat terpisah (code splitting) agar halaman login lebih ringan.
@@ -31,25 +32,27 @@ function withSuspense(element) {
 
 function App() {
   return (
-    <Routes>
-      {/* Auth routes */}
-      <Route path="auth" element={<AuthLayout />}>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="register" element={<RegisterPage />} />
-      </Route>
+    <ErrorBoundary>
+      <Routes>
+        {/* Auth routes */}
+        <Route path="auth" element={<AuthLayout />}>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="register" element={<RegisterPage />} />
+        </Route>
 
-      {/* Protected dashboard routes (route guard ada di LostFoundLayout) */}
-      <Route path="/" element={<LostFoundLayout />}>
-        <Route index element={withSuspense(<HomePage />)} />
-        <Route path="lost-founds/:id" element={withSuspense(<DetailPage />)} />
-        <Route path="stats" element={withSuspense(<StatsPage />)} />
-        <Route path="users" element={withSuspense(<UsersPage />)} />
-        <Route path="profile" element={withSuspense(<ProfilePage />)} />
-      </Route>
+        {/* Protected dashboard routes (route guard ada di LostFoundLayout) */}
+        <Route path="/" element={<LostFoundLayout />}>
+          <Route index element={withSuspense(<HomePage />)} />
+          <Route path="lost-founds/:id" element={withSuspense(<DetailPage />)} />
+          <Route path="stats" element={withSuspense(<StatsPage />)} />
+          <Route path="users" element={withSuspense(<UsersPage />)} />
+          <Route path="profile" element={withSuspense(<ProfilePage />)} />
+        </Route>
 
-      {/* 404 Route */}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+        {/* 404 Route */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </ErrorBoundary>
   );
 }
 
