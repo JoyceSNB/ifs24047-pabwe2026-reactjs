@@ -3,12 +3,36 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import process from "process";
 
+// Saat build, isi file CSS dimasukkan langsung ke index.html (<style>)
+// supaya browser tidak perlu request CSS terpisah sebelum menampilkan halaman.
+function inlineCssPlugin() {
+  return {
+    name: "inline-css",
+    apply: "build",
+    transformIndexHtml: {
+      order: "post",
+      handler(html, ctx) {
+        if (!ctx.bundle) return html;
+        let result = html;
+        for (const [fileName, asset] of Object.entries(ctx.bundle)) {
+          if (asset.type !== "asset" || !fileName.endsWith(".css")) continue;
+          const linkTag = new RegExp(`<link[^>]*href="/${fileName}"[^>]*>`);
+          if (!linkTag.test(result)) continue;
+          result = result.replace(linkTag, () => `<style>${asset.source}</style>`);
+          delete ctx.bundle[fileName];
+        }
+        return result;
+      },
+    },
+  };
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
 
   return {
-    plugins: [react(), tailwindcss()],
+    plugins: [react(), tailwindcss(), inlineCssPlugin()],
     // host & allowedHosts: agar bisa diakses lewat domain hasil deploy,
     // bukan hanya dari localhost. Vite otomatis mengarahkan path seperti
     // /auth/login ke index.html (SPA fallback) di mode dev & preview.
