@@ -68,6 +68,7 @@ function DetailPage() {
   if (!profile || !lostFound || String(lostFound.id) !== String(id)) {
     return (
       <div data-testid="detail-loading" className="py-24 text-center text-slate-600" role="status">
+        <h1 className="sr-only">Detail laporan</h1>
         <IconLoader2 size={32} className="mx-auto mb-2 animate-spin text-teal-700" />
         Memuat laporan...
       </div>

@@ -13,16 +13,30 @@ const StatsPage = lazy(() => import("./features/lost-founds/pages/StatsPage"));
 const UsersPage = lazy(() => import("./features/users/pages/UsersPage"));
 const ProfilePage = lazy(() => import("./features/users/pages/ProfilePage"));
 
+// Fallback saat halaman (di dalam layout) sedang dimuat
 function PageLoader() {
   return (
     <div className="py-24 text-center text-slate-600" role="status">
+      <h1 className="sr-only">Memuat halaman</h1>
       Memuat halaman...
     </div>
   );
 }
 
-function withSuspense(element) {
-  return <Suspense fallback={<PageLoader />}>{element}</Suspense>;
+// Fallback saat layout dashboard sedang dimuat (belum ada <main> dari layout)
+function LayoutLoader() {
+  return (
+    <main className="min-h-screen flex items-center justify-center bg-stone-100">
+      <h1 className="sr-only">Delcom Lost &amp; Found</h1>
+      <p className="text-sm font-medium text-slate-600" role="status">
+        Memuat aplikasi...
+      </p>
+    </main>
+  );
+}
+
+function withSuspense(element, fallback = <PageLoader />) {
+  return <Suspense fallback={fallback}>{element}</Suspense>;
 }
 
 function App() {
@@ -35,7 +49,7 @@ function App() {
       </Route>
 
       {/* Protected dashboard routes (route guard ada di LostFoundLayout) */}
-      <Route path="/" element={withSuspense(<LostFoundLayout />)}>
+      <Route path="/" element={withSuspense(<LostFoundLayout />, <LayoutLoader />)}>
         <Route index element={withSuspense(<HomePage />)} />
         <Route path="lost-founds/:id" element={withSuspense(<DetailPage />)} />
         <Route path="stats" element={withSuspense(<StatsPage />)} />

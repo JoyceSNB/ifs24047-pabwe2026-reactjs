@@ -52,12 +52,13 @@ function LostFoundLayout() {
 
   if (!profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-stone-100">
+      <main className="min-h-screen flex items-center justify-center bg-stone-100">
+        <h1 className="sr-only">Delcom Lost &amp; Found</h1>
         <div className="flex flex-col items-center gap-3" role="status">
           <div className="w-10 h-10 border-4 border-teal-700 border-t-transparent rounded-full animate-spin" />
           <p className="text-sm font-medium text-slate-600">Memeriksa sesi masuk...</p>
         </div>
-      </div>
+      </main>
     );
   }
 
