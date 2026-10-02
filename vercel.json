@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/api/v1/:path*", "destination": "https://open-api.delcom.org/api/v1/:path*" },
+    { "source": "/img/:path*", "destination": "https://open-api.delcom.org/img/:path*" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }
