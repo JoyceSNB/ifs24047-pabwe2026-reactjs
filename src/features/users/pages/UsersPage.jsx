@@ -61,6 +61,8 @@ function UsersPage() {
             />
             <input
               type="text"
+              id="search-user-input"
+              name="search"
               data-testid="search-user-input"
               aria-label="Cari pengguna"
               value={search}

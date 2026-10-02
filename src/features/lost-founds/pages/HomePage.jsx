@@ -217,6 +217,8 @@ function HomePage() {
           />
           <input
             type="search"
+            id="search-lost-found"
+            name="search"
             data-testid="search-input"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -241,6 +243,8 @@ function HomePage() {
           </div>
 
           <select
+            id="completion-filter"
+            name="completion"
             data-testid="completion-select"
             aria-label="Status penyelesaian"
             value={completionFilter}

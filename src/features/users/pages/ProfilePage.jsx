@@ -175,6 +175,8 @@ function ProfilePage() {
             )}
             <input
               type="file"
+              id="profile-photo-file-input"
+              name="photo"
               data-testid="profile-photo-file-input"
               accept="image/*"
               onChange={handlePhotoUpload}
@@ -206,11 +208,14 @@ function ProfilePage() {
 
           <form onSubmit={handleUpdateProfile} className="space-y-4">
             <div>
-              <label htmlFor="profile-name-input" className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="profile-name-input"
+                className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5"
+              >
                 Nama Lengkap
               </label>
               <input
-            id="profile-name-input"
+                id="profile-name-input"
                 type="text"
                 data-testid="profile-name-input"
                 value={name}
@@ -221,11 +226,14 @@ function ProfilePage() {
             </div>
 
             <div>
-              <label htmlFor="profile-email-input" className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="profile-email-input"
+                className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5"
+              >
                 Alamat Email
               </label>
               <input
-            id="profile-email-input"
+                id="profile-email-input"
                 type="email"
                 data-testid="profile-email-input"
                 value={email}
@@ -266,11 +274,14 @@ function ProfilePage() {
 
           <form onSubmit={handleUpdatePassword} className="space-y-4">
             <div>
-              <label htmlFor="current-password-input" className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="current-password-input"
+                className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5"
+              >
                 Kata Sandi Saat Ini
               </label>
               <input
-            id="current-password-input"
+                id="current-password-input"
                 type="password"
                 data-testid="current-password-input"
                 value={oldPassword}
@@ -282,11 +293,14 @@ function ProfilePage() {
             </div>
 
             <div>
-              <label htmlFor="new-password-input" className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="new-password-input"
+                className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5"
+              >
                 Kata Sandi Baru
               </label>
               <input
-            id="new-password-input"
+                id="new-password-input"
                 type="password"
                 data-testid="new-password-input"
                 value={newPassword}
@@ -298,11 +312,14 @@ function ProfilePage() {
             </div>
 
             <div>
-              <label htmlFor="confirm-password-input" className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor="confirm-password-input"
+                className="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5"
+              >
                 Ulangi Kata Sandi Baru
               </label>
               <input
-            id="confirm-password-input"
+                id="confirm-password-input"
                 type="password"
                 data-testid="confirm-password-input"
                 value={newPasswordConfirmation}
