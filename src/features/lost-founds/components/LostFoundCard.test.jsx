@@ -67,4 +67,26 @@ describe("LostFoundCard", () => {
     expect(screen.getByTestId("completion-badge")).toHaveTextContent("Selesai");
     expect(screen.getByText(/Dilaporkan Pengguna/)).toBeInTheDocument();
   });
+
+  it("should load the image lazily by default and eagerly with priority", () => {
+    const { unmount } = render(
+      <LostFoundCard lostFound={baseItem} isOwner onView={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} />
+    );
+    expect(screen.getByAltText("Dompet coklat")).toHaveAttribute("loading", "lazy");
+    unmount();
+
+    render(
+      <LostFoundCard
+        lostFound={baseItem}
+        isOwner
+        priority
+        onView={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+      />
+    );
+    const img = screen.getByAltText("Dompet coklat");
+    expect(img).toHaveAttribute("loading", "eager");
+    expect(img).toHaveAttribute("fetchpriority", "high");
+  });
 });

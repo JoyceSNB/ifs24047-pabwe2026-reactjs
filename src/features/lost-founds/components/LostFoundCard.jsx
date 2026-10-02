@@ -3,7 +3,8 @@ import { formatShortDate, toImageUrl } from "../../../helpers/toolsHelper";
 import { StatusBadge, CompletionBadge } from "./StatusBadge";
 
 // Kartu laporan berbentuk label barang (tag) dengan lubang tali di pojok
-function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete }) {
+// priority: true untuk kartu pertama agar fotonya langsung diunduh (bukan lazy)
+function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete, priority = false }) {
   const isLost = lostFound.status === "lost";
   const coverUrl = toImageUrl(lostFound.cover);
   const authorName = lostFound.author?.name || "Pengguna";
@@ -26,7 +27,8 @@ function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete }) {
           <img
             src={coverUrl}
             alt={lostFound.title}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "auto"}
             width={400}
             height={300}
             className="w-full h-full object-cover"

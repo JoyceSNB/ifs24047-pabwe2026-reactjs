@@ -304,10 +304,11 @@ function HomePage() {
         </div>
       ) : (
         <div data-testid="lost-found-grid" className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {filtered.map((item) => (
+          {filtered.map((item, index) => (
             <LostFoundCard
               key={item.id}
               lostFound={item}
+              priority={index === 0}
               isOwner={item.user_id === profile.id}
               onView={(id) => navigate(`/lost-founds/${id}`)}
               onEdit={setEditingLostFound}
@@ -319,7 +320,7 @@ function HomePage() {
 
       <AddModal show={showAddModal} onClose={closeAddModal} onSuccess={loadLostFounds} />
       <ChangeModal
-        show={Boolean(editingLostFound)}
+        show={showEditModal}
         lostFound={editingLostFound}
         onClose={closeChangeModal}
         onSuccess={loadLostFounds}

@@ -100,19 +100,22 @@ function DetailPage() {
       </Link>
 
       <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
-        {/* Foto barang, rasio mengikuti foto asli */}
-        <figure className="rounded-3xl overflow-hidden bg-slate-800">
+        {/* Kotak foto punya rasio tetap supaya isi halaman tidak bergeser saat foto selesai dimuat */}
+        <figure className="aspect-[4/3] rounded-3xl overflow-hidden bg-slate-800">
           {coverUrl ? (
             <img
               src={coverUrl}
               alt={lostFound.title}
               data-testid="detail-cover"
-              className="w-full h-auto max-h-[70vh] object-contain mx-auto"
+              width={800}
+              height={600}
+              fetchPriority="high"
+              className="w-full h-full object-contain"
             />
           ) : (
             <div
               data-testid="detail-no-cover"
-              className="aspect-[4/3] flex flex-col items-center justify-center gap-2 bg-slate-100 text-slate-600"
+              className="h-full flex flex-col items-center justify-center gap-2 bg-slate-100 text-slate-600"
             >
               <IconPhotoOff size={40} />
               <span className="text-sm">Belum ada foto barang</span>
