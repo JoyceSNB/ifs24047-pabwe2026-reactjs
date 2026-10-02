@@ -4,9 +4,11 @@ import AuthLayout from "./features/auth/layouts/AuthLayout";
 import LoginPage from "./features/auth/pages/LoginPage";
 import RegisterPage from "./features/auth/pages/RegisterPage";
 import NotFoundPage from "./features/common/pages/NotFoundPage";
+import LostFoundLayout from "./features/lost-founds/layouts/LostFoundLayout";
 
-// Halaman dashboard dimuat terpisah (code splitting) agar halaman login lebih ringan
-const LostFoundLayout = lazy(() => import("./features/lost-founds/layouts/LostFoundLayout"));
+// Halaman dashboard dimuat terpisah (code splitting) agar halaman login lebih ringan.
+// Layout dimuat langsung supaya pengecekan sesi (GET /users/me) bisa segera berjalan
+// tanpa menunggu file JavaScript tambahan.
 const HomePage = lazy(() => import("./features/lost-founds/pages/HomePage"));
 const DetailPage = lazy(() => import("./features/lost-founds/pages/DetailPage"));
 const StatsPage = lazy(() => import("./features/lost-founds/pages/StatsPage"));
@@ -23,20 +25,8 @@ function PageLoader() {
   );
 }
 
-// Fallback saat layout dashboard sedang dimuat (belum ada <main> dari layout)
-function LayoutLoader() {
-  return (
-    <main className="min-h-screen flex items-center justify-center bg-stone-100">
-      <h1 className="sr-only">Delcom Lost &amp; Found</h1>
-      <p className="text-sm font-medium text-slate-600" role="status">
-        Memuat aplikasi...
-      </p>
-    </main>
-  );
-}
-
-function withSuspense(element, fallback = <PageLoader />) {
-  return <Suspense fallback={fallback}>{element}</Suspense>;
+function withSuspense(element) {
+  return <Suspense fallback={<PageLoader />}>{element}</Suspense>;
 }
 
 function App() {
@@ -49,7 +39,7 @@ function App() {
       </Route>
 
       {/* Protected dashboard routes (route guard ada di LostFoundLayout) */}
-      <Route path="/" element={withSuspense(<LostFoundLayout />, <LayoutLoader />)}>
+      <Route path="/" element={<LostFoundLayout />}>
         <Route index element={withSuspense(<HomePage />)} />
         <Route path="lost-founds/:id" element={withSuspense(<DetailPage />)} />
         <Route path="stats" element={withSuspense(<StatsPage />)} />
