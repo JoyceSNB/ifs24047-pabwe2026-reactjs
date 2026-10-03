@@ -4,7 +4,7 @@ import AuthLayout from "./features/auth/layouts/AuthLayout";
 import LoginPage from "./features/auth/pages/LoginPage";
 import RegisterPage from "./features/auth/pages/RegisterPage";
 import NotFoundPage from "./features/common/pages/NotFoundPage";
-import ErrorBoundary from "./features/common/components/ErrorBoundary";
+import ErrorBoundary from "./features/lost-founds/components/ErrorBoundary";
 import LostFoundLayout from "./features/lost-founds/layouts/LostFoundLayout";
 
 // Halaman dashboard dimuat terpisah (code splitting) agar halaman login lebih ringan.

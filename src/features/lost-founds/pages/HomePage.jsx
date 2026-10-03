@@ -320,7 +320,7 @@ function HomePage() {
 
       <AddModal show={showAddModal} onClose={closeAddModal} onSuccess={loadLostFounds} />
       <ChangeModal
-        show={showEditModal}
+        show={Boolean(editingLostFound)}
         lostFound={editingLostFound}
         onClose={closeChangeModal}
         onSuccess={loadLostFounds}
