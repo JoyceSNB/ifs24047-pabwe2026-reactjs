@@ -1,7 +1,6 @@
 import { IconEye, IconPencil, IconTrash, IconPhotoOff } from "@tabler/icons-react";
-import { formatShortDate } from "../../../helpers/toolsHelper";
+import { formatShortDate, toImageUrl } from "../../../helpers/toolsHelper";
 import { StatusBadge, CompletionBadge } from "./StatusBadge";
-import OptimizedImage from "./OptimizedImage";
 
 // Kartu laporan berbentuk label barang (tag) dengan lubang tali di pojok
 // priority: true untuk kartu pertama agar fotonya langsung diunduh (bukan lazy)
@@ -24,9 +23,8 @@ function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete, priority 
         aria-label={`Lihat detail ${lostFound.title}`}
       >
         {lostFound.cover ? (
-          <OptimizedImage
-            path={lostFound.cover}
-            optimizedWidth={640}
+          <img
+            src={toImageUrl(lostFound.cover)}
             alt={lostFound.title}
             loading={priority ? "eager" : "lazy"}
             fetchPriority={priority ? "high" : "auto"}

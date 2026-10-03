@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import Swal from "sweetalert2";
 import {
   showErrorDialog,
@@ -9,7 +9,6 @@ import {
   formatShortDate,
   toApiDateTime,
   toImageUrl,
-  toOptimizedImageUrl,
 } from "./toolsHelper";
 
 vi.mock("sweetalert2", () => ({
@@ -117,41 +116,5 @@ describe("toolsHelper", () => {
     expect(toImageUrl("/default/img/user.png")).toBe(
       "https://open-api.delcom.org/default/img/user.png"
     );
-  });
-
-  describe("toOptimizedImageUrl", () => {
-    afterEach(() => {
-      vi.unstubAllEnvs();
-    });
-
-    it("should return null without path and original url outside production", () => {
-      expect(toOptimizedImageUrl(null)).toBeNull();
-      expect(toOptimizedImageUrl("img/lost-founds/cover/1.png")).toBe(
-        "https://open-api.delcom.org/img/lost-founds/cover/1.png"
-      );
-    });
-
-    it("should build optimizer url from relative and absolute Delcom paths in production", () => {
-      vi.stubEnv("PROD", true);
-      const encoded = encodeURIComponent("https://open-api.delcom.org/img/lost-founds/cover/1.png");
-
-      expect(toOptimizedImageUrl("img/lost-founds/cover/1.png")).toBe(
-        `/_vercel/image?url=${encoded}&w=828&q=75`
-      );
-      expect(toOptimizedImageUrl("/img/lost-founds/cover/1.png", 640)).toBe(
-        `/_vercel/image?url=${encoded}&w=640&q=75`
-      );
-      expect(toOptimizedImageUrl("https://open-api.delcom.org/img/lost-founds/cover/1.png", 96)).toBe(
-        `/_vercel/image?url=${encoded}&w=96&q=75`
-      );
-    });
-
-    it("should keep original url for images outside the Delcom server in production", () => {
-      vi.stubEnv("PROD", true);
-      expect(toOptimizedImageUrl("https://cdn.example.com/a.png")).toBe(
-        "https://cdn.example.com/a.png"
-      );
-      expect(toOptimizedImageUrl("blob:http://localhost/abc")).toBe("blob:http://localhost/abc");
-    });
   });
 });

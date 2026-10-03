@@ -8,7 +8,7 @@ import {
   IconMenu2,
   IconX,
 } from "@tabler/icons-react";
-import OptimizedImage from "./OptimizedImage";
+import { toImageUrl } from "../../../helpers/toolsHelper";
 
 function NavbarComponent({ profile, handleLogout, onToggleSidebar, isSidebarOpen }) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -62,9 +62,8 @@ function NavbarComponent({ profile, handleLogout, onToggleSidebar, isSidebarOpen
             className="flex items-center gap-2.5 p-1 pr-2.5 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors"
           >
             {profile?.photo ? (
-              <OptimizedImage
-                path={profile.photo}
-                optimizedWidth={96}
+              <img
+                src={toImageUrl(profile.photo)}
                 alt={profile.name}
                 className="w-8 h-8 rounded-full object-cover"
               />

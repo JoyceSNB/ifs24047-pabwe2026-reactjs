@@ -45,11 +45,6 @@ export default defineConfig(({ mode }) => {
       port: Number(env.APP_PORT) || 3000,
       host: true,
       allowedHosts: true,
-      // Meniru proxy di vercel.json saat menjalankan "bun run preview"
-      proxy: {
-        "/api/v1": { target: "https://open-api.delcom.org", changeOrigin: true },
-        "/img": { target: "https://open-api.delcom.org", changeOrigin: true },
-      },
     },
     define: {
       DELCOM_BASEURL: JSON.stringify(
