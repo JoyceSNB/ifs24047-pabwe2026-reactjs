@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import LostFoundCard from "./LostFoundCard";
 
@@ -21,6 +21,10 @@ function setup(props = {}) {
 }
 
 describe("LostFoundCard", () => {
+  afterEach(() => {
+    vi.unstubAllEnvs();
+  });
+
   it("should render report information with cover", () => {
     setup();
     expect(screen.getByText("Dompet coklat")).toBeInTheDocument();
@@ -88,5 +92,15 @@ describe("LostFoundCard", () => {
     const img = screen.getByAltText("Dompet coklat");
     expect(img).toHaveAttribute("loading", "eager");
     expect(img).toHaveAttribute("fetchpriority", "high");
+  });
+
+  it("should request a 640px optimized image in production and keep the width attribute", () => {
+    vi.stubEnv("PROD", true);
+    setup({ lostFound: { ...baseItem, cover: "img/lost-founds/cover/7.png" } });
+
+    const img = screen.getByAltText("Dompet coklat");
+    expect(img.getAttribute("src")).toContain("/_vercel/image?url=");
+    expect(img.getAttribute("src")).toContain("&w=640&q=75");
+    expect(img).toHaveAttribute("width", "400");
   });
 });

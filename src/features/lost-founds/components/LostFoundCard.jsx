@@ -1,12 +1,12 @@
 import { IconEye, IconPencil, IconTrash, IconPhotoOff } from "@tabler/icons-react";
-import { formatShortDate, toImageUrl } from "../../../helpers/toolsHelper";
+import { formatShortDate } from "../../../helpers/toolsHelper";
 import { StatusBadge, CompletionBadge } from "./StatusBadge";
+import OptimizedImage from "./OptimizedImage";
 
 // Kartu laporan berbentuk label barang (tag) dengan lubang tali di pojok
 // priority: true untuk kartu pertama agar fotonya langsung diunduh (bukan lazy)
 function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete, priority = false }) {
   const isLost = lostFound.status === "lost";
-  const coverUrl = toImageUrl(lostFound.cover);
   const authorName = lostFound.author?.name || "Pengguna";
 
   return (
@@ -23,9 +23,10 @@ function LostFoundCard({ lostFound, isOwner, onView, onEdit, onDelete, priority 
         className="relative block aspect-[4/3] bg-slate-100 text-left"
         aria-label={`Lihat detail ${lostFound.title}`}
       >
-        {coverUrl ? (
-          <img
-            src={coverUrl}
+        {lostFound.cover ? (
+          <OptimizedImage
+            path={lostFound.cover}
+            optimizedWidth={640}
             alt={lostFound.title}
             loading={priority ? "eager" : "lazy"}
             fetchPriority={priority ? "high" : "auto"}

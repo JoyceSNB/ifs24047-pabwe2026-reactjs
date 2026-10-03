@@ -96,3 +96,19 @@ export function toImageUrl(path) {
   const origin = DELCOM_BASEURL.replace(/\/api\/v\d+\/?$/, "");
   return `${origin}/${path.replace(/^\/+/, "")}`;
 }
+
+const DELCOM_ORIGIN = "https://open-api.delcom.org";
+
+// URL foto yang dikecilkan oleh Vercel Image Optimization (hanya di produksi).
+// Di luar produksi, atau untuk foto di luar server Delcom, kembali ke URL asli.
+export function toOptimizedImageUrl(path, width = 828) {
+  if (!path) return null;
+  if (!import.meta.env.PROD) return toImageUrl(path);
+
+  const absolute = /^(https?:|blob:|data:)/i.test(path)
+    ? path
+    : `${DELCOM_ORIGIN}/${path.replace(/^\/+/, "")}`;
+  if (!absolute.startsWith(`${DELCOM_ORIGIN}/`)) return toImageUrl(path);
+
+  return `/_vercel/image?url=${encodeURIComponent(absolute)}&w=${width}&q=75`;
+}

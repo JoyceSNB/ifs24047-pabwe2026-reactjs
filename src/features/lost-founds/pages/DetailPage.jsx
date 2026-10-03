@@ -20,6 +20,7 @@ import { formatDate, showConfirmDialog, toImageUrl } from "../../../helpers/tool
 import { StatusBadge, CompletionBadge } from "../components/StatusBadge";
 import ChangeCoverModal from "../modals/ChangeCoverModal";
 import ChangeModal from "../modals/ChangeModal";
+import OptimizedImage from "../components/OptimizedImage";
 
 function DetailPage() {
   const { id } = useParams();
@@ -84,7 +85,6 @@ function DetailPage() {
 
   const isOwner = lostFound.user_id === profile.id;
   const isLost = lostFound.status === "lost";
-  const coverUrl = toImageUrl(lostFound.cover);
   const authorPhoto = toImageUrl(lostFound.author?.photo);
   const authorName = lostFound.author?.name || "Pengguna";
 
@@ -102,9 +102,10 @@ function DetailPage() {
       <div className="grid gap-6 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:items-start">
         {/* Kotak foto punya rasio tetap supaya isi halaman tidak bergeser saat foto selesai dimuat */}
         <figure className="aspect-[4/3] rounded-3xl overflow-hidden bg-slate-800">
-          {coverUrl ? (
-            <img
-              src={coverUrl}
+          {lostFound.cover ? (
+            <OptimizedImage
+              path={lostFound.cover}
+              optimizedWidth={828}
               alt={lostFound.title}
               data-testid="detail-cover"
               width={800}
