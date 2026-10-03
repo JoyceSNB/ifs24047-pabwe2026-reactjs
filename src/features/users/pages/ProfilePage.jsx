@@ -8,7 +8,7 @@ import {
   setIsChangeProfilePhotoActionCreator,
   setIsChangeProfilePasswordActionCreator,
 } from "../states/action";
-import { showErrorDialog } from "../../../helpers/toolsHelper";
+import { showErrorDialog, toImageUrl } from "../../../helpers/toolsHelper";
 import {
   IconUser,
   IconLock,
@@ -153,7 +153,7 @@ function ProfilePage() {
         <div className="relative group">
           {profile.photo ? (
             <img
-              src={profile.photo}
+              src={toImageUrl(profile.photo)}
               alt={profile.name}
               className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-md ring-2 ring-teal-100"
             />

@@ -175,4 +175,16 @@ describe("ProfilePage", () => {
 
     expect(screen.getByText("Profil Akun")).toBeInTheDocument();
   });
+
+  it("should resolve a relative profile photo path to the Delcom server", () => {
+    renderWithProviders(<ProfilePage />, {
+      preloadedState: {
+        profile: { ...mockProfile, photo: "default/img/user.png" },
+      },
+    });
+    expect(screen.getByAltText("Abdullah Ubaid")).toHaveAttribute(
+      "src",
+      "https://open-api.delcom.org/default/img/user.png"
+    );
+  });
 });

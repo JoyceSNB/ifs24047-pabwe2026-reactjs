@@ -110,6 +110,15 @@ describe("toolsHelper", () => {
     expect(toImageUrl("/img/x.png")).toBe("https://open-api.delcom.org/img/x.png");
   });
 
+  it("should resolve default avatar path outside /img to the Delcom server", () => {
+    expect(toImageUrl("default/img/user.png")).toBe(
+      "https://open-api.delcom.org/default/img/user.png"
+    );
+    expect(toImageUrl("/default/img/user.png")).toBe(
+      "https://open-api.delcom.org/default/img/user.png"
+    );
+  });
+
   describe("toOptimizedImageUrl", () => {
     afterEach(() => {
       vi.unstubAllEnvs();

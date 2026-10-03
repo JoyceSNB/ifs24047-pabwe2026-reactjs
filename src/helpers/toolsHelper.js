@@ -89,15 +89,18 @@ export function toApiDateTime(date = new Date()) {
   );
 }
 
-// API bisa mengembalikan path relatif (img/lost-founds/cover/...) atau URL penuh.
+// Alamat server Delcom, tempat semua foto (cover & avatar) disimpan.
+const DELCOM_ORIGIN = "https://open-api.delcom.org";
+
+// API bisa mengembalikan path relatif (img/lost-founds/cover/..., default/img/user.png)
+// atau URL penuh. Path relatif selalu diarahkan ke server Delcom, bukan ke domain web ini,
+// supaya tidak tertukar dengan halaman aplikasi (Vercel mengembalikan index.html untuk
+// path yang tidak dikenal).
 export function toImageUrl(path) {
   if (!path) return null;
   if (/^(https?:|blob:|data:)/i.test(path)) return path;
-  const origin = DELCOM_BASEURL.replace(/\/api\/v\d+\/?$/, "");
-  return `${origin}/${path.replace(/^\/+/, "")}`;
+  return `${DELCOM_ORIGIN}/${path.replace(/^\/+/, "")}`;
 }
-
-const DELCOM_ORIGIN = "https://open-api.delcom.org";
 
 // URL foto yang dikecilkan oleh Vercel Image Optimization (hanya di produksi).
 // Di luar produksi, atau untuk foto di luar server Delcom, kembali ke URL asli.
@@ -105,10 +108,8 @@ export function toOptimizedImageUrl(path, width = 828) {
   if (!path) return null;
   if (!import.meta.env.PROD) return toImageUrl(path);
 
-  const absolute = /^(https?:|blob:|data:)/i.test(path)
-    ? path
-    : `${DELCOM_ORIGIN}/${path.replace(/^\/+/, "")}`;
-  if (!absolute.startsWith(`${DELCOM_ORIGIN}/`)) return toImageUrl(path);
+  const absolute = toImageUrl(path);
+  if (!absolute.startsWith(`${DELCOM_ORIGIN}/`)) return absolute;
 
   return `/_vercel/image?url=${encodeURIComponent(absolute)}&w=${width}&q=75`;
 }
